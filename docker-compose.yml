@@ -1,0 +1,26 @@
+services:
+  mysql:
+    image: "mysql/mysql-server:8.0"
+    environment:
+      MYSQL_ROOT_PASSWORD: "Admin@123"
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_DATABASE: laravel
+      MYSQL_USER: habib
+      MYSQL_PASSWORD: "Admin@123"
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+    restart: always
+  web:
+    build: .
+    environment:
+      MYSQL_DATABASE: laravel
+      MYSQL_USER: root
+      MYSQL_PASSWORD: "Admin@123"
+      MYSQL_HOST: mysql
+      PORT: 3000
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mysql
+networks:
+  nodemysql:
+    driver: bridge
